@@ -1,4 +1,4 @@
-# Show coastlines using Leaflet with GeoServer
+# Use React with Leaflet and GeoServer
 
 This project demostrates how to use react with leaflet as FrontEnd App and access data from GeoServer.
 
@@ -6,11 +6,11 @@ It adds a coastline map layer besides the leaflet original map layer.
 
 ## Steps
 
-- 1. Download [OpenStreetMap Coastlines](https://osmdata.openstreetmap.de/data/coastlines.html)
-- 2. Install [GeoServer](https://docs.geoserver.org/latest/en/user/installation/docker.html#using-your-own-data-directory) with docker.
-- 3. Unzip the downloaded shapefile in Step 1 and copy to GeoServer mounted data directory.
-- 4. Publish your shapefile in GeoServer with [GeoServer Official Tutorial](https://docs.geoserver.org/latest/en/user/gettingstarted/shapefile-quickstart/index.html#shapefile-quickstart).
-- 5. Run this React app with `npm ci && npm start`.
+1. Download [OpenStreetMap Coastlines](https://osmdata.openstreetmap.de/data/coastlines.html)
+2. Install [GeoServer](https://docs.geoserver.org/latest/en/user/installation/docker.html#using-your-own-data-directory) with docker.
+3. Unzip the downloaded shapefile in Step 1 and copy to GeoServer mounted data directory.
+4. Publish your shapefile in GeoServer with [GeoServer Official Tutorial](https://docs.geoserver.org/latest/en/user/gettingstarted/shapefile-quickstart/index.html#shapefile-quickstart).
+5. Run this React app with `npm ci && npm start`.
 
 ## Available Scripts
 
