@@ -13,27 +13,40 @@ function WMSTileLayer({ url, wmsParams, show }: WMSTileLayerProps) {
   const tileLayerRef = useRef<L.TileLayer.WMS | null>(null);
   const map = useMap();
 
-  const getCurrentBbox = () => {
-    const bounds = map.getBounds();
-    const bbox = [
-      bounds.getSouthWest().lng,
-      bounds.getSouthWest().lat,
-      bounds.getNorthEast().lng,
-      bounds.getNorthEast().lat,
-    ];
-    return bbox;
-  };
-
   useEffect(() => {
+    const updateBbox = () => {
+      const bounds = map.getBounds();
+      const bbox = [
+        bounds.getSouthWest().lng,
+        bounds.getSouthWest().lat,
+        bounds.getNorthEast().lng,
+        bounds.getNorthEast().lat,
+      ];
+      console.log("Current bbox:", bbox);
+
+      const wmsUrl = `${url}?service=WMS&version=1.1.0&request=GetMap&layers=${
+        wmsParams.layers
+      }&bbox=${bbox.join(
+        ","
+      )}&width=768&height=636&srs=EPSG:4326&styles=&format=application/openlayers`;
+      console.log("WMS URL:", wmsUrl);
+    };
+
+    const handleMoveEnd = () => {
+      updateBbox();
+    };
+
+    updateBbox();
     if (show) {
       console.log(wmsParams);
-      console.log("Current bbox:", getCurrentBbox());
       tileLayerRef.current = L.tileLayer.wms(url, wmsParams).addTo(map);
+      map.on("moveend", handleMoveEnd); // 添加 moveend 事件监听
     } else {
       if (tileLayerRef.current) {
         map.removeLayer(tileLayerRef.current);
         tileLayerRef.current = null;
       }
+      map.off("moveend", handleMoveEnd); // 移除 moveend 事件监听
     }
 
     return () => {
@@ -41,6 +54,7 @@ function WMSTileLayer({ url, wmsParams, show }: WMSTileLayerProps) {
         map.removeLayer(tileLayerRef.current);
         tileLayerRef.current = null;
       }
+      map.off("moveend", handleMoveEnd); // 在组件卸载时移除 moveend 事件监听
     };
   }, [url, wmsParams, show, map]);
 
